@@ -7,3 +7,6 @@ def profile(request, user_id):
 
 def user_list(request):
     pass
+
+def register(request):
+    pass
