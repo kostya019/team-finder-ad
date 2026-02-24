@@ -36,7 +36,7 @@ class Project(models.Model):
     )
 
     created_at = models.DateTimeField(
-        auto_now_ad=True,
+        auto_now_add=True,
         verbose_name='Дата создания проекта'
     )
 
@@ -52,11 +52,10 @@ class Project(models.Model):
         verbose_name='Статус проекта'
     )
 
-    participants = models.ManyToMany(
+    participants = models.ManyToManyField(
         User,
         blank=True,
-        null=True,
-        on_delete=models.PROTECT,
+        related_name='participants',
         verbose_name='Участники проекта'
     )
 
@@ -65,7 +64,7 @@ class Project(models.Model):
         verbose_name_plural = 'Проекты'
 
     def __str__(self):
-        return f'Название проекта: "{self.name}"'
+        return self.name
 
 class Users(models.Model):
     email = models.EmailField(
@@ -120,7 +119,7 @@ class Users(models.Model):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return f'Пользователь {self.name} {self.surname}'
+        return f'{self.name} {self.surname}'
 
 class Skill(models.Model):
     name = models.CharField(
@@ -133,4 +132,4 @@ class Skill(models.Model):
         verbose_name_plural = 'Навыки'
 
     def __str__(self):
-        return f'Название навыка: "{self.name}"'
+        return self.name
