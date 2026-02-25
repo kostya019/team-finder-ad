@@ -8,18 +8,20 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 
+AUTH_USER_MODEL = 'users.User'
+
 ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "users",
+    "projects",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users",
-    "projects"
 ]
 
 MIDDLEWARE = [

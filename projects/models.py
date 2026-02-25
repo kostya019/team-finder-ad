@@ -1,23 +1,11 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-# Create your models here.
-
-#
-# !!! Добавить  UserManager
-#
-# Добавить в Project внешний ключ на Skill
-#
-# Добавить необходимые методы к моделям
-#
-
-User = get_user_model()
-
-CHOICES = [
-    ("open", "Open"),
-    ("closed", "Closed")
-]
 
 class Project(models.Model):
+    CHOICES = [
+        ("open", "Open"),
+        ("closed", "Closed")
+    ]
+
     name = models.CharField(
         max_length=200,
         verbose_name="Название проекта"
@@ -30,8 +18,9 @@ class Project(models.Model):
     )
 
     owner = models.ForeignKey(
-        User,
+        'users.User',
         on_delete=models.CASCADE,
+        related_name='owned_projects',
         verbose_name='Автор проекта'
     )
 
@@ -53,73 +42,27 @@ class Project(models.Model):
     )
 
     participants = models.ManyToManyField(
-        User,
+        'users.User',
         blank=True,
-        related_name='participants',
+        related_name='participated_projects',
         verbose_name='Участники проекта'
+    )
+
+    skills = models.ManyToManyField(
+        'Skill',
+        blank=True,
+        related_name='projects',
+        verbose_name='Навыки, необходимые проекту'
     )
 
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.name
 
-class Users(models.Model):
-    email = models.EmailField(
-        unique=True,
-        verbose_name='Адрес электронной почты'
-    )
-
-    name = models.CharField(
-        max_length=124,
-        verbose_name='Имя пользователя'
-    )
-
-    surname = models.CharField(
-        max_length=124,
-        verbose_name='Фамилия пользователя'
-    )
-
-    avatar = models.ImageField(
-        verbose_name='Аватарка пользователя'
-    )
-
-    phone = models.CharField(
-        max_length=12,
-        verbose_name='Номер телефона'
-    )
-
-    github_url = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name='Ссылка на Github'
-    )
-
-    about = models.TextField(
-        max_length=256,
-        blank=True,
-        null=True,
-        verbose_name='Описание профиля'
-    )
-
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='Активный пользователь'
-    )
-
-    is_staff = models.BooleanField(
-        default=False,
-        verbose_name='Администратор'
-    )
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-
-    def __str__(self):
-        return f'{self.name} {self.surname}'
 
 class Skill(models.Model):
     name = models.CharField(

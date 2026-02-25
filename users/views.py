@@ -10,3 +10,6 @@ def user_list(request):
 
 def register(request):
     pass
+
+def edit_ptofile(request):
+    pass
