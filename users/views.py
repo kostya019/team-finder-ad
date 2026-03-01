@@ -4,9 +4,11 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from projects.models import Project
-from .forms import CustomAuthenticationForm, CustomUserForm
+from .forms import CustomAuthenticationForm, CustomUserForm, CustomRegistrationForm
 from .models import CustomUser
 
 def profile(request, user_id):
@@ -47,6 +49,19 @@ def edit_profile(request):
         'form': form
     }
     return render(request, 'users/edit_profile.html', context)
+
+
+class RegistrationView(CreateView):
+    form_class = CustomRegistrationForm
+    template_name = 'users/register.html'
+    success_url = reverse_lazy('users:login')
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_active = True 
+        user.save()
+        return redirect(self.success_url)
+
 
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
