@@ -7,18 +7,26 @@ from .models import Project, Skill
 from .forms import ProjectForm
 
 def project_list(request):
-    template = 'projects/project_list.html'
+    all_skills = Skill.objects.all()
+    active_skill = request.GET.get('skill')
+    
+    if active_skill:
+        projects = Project.objects.all().filter(skills__name=active_skill)
+    else:
+        projects = Project.objects.all().filter(status='open')
 
-    projects = Project.objects.all().filter(status='open')
-
+    # пагинатор на будущее
     paginator = Paginator(projects, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'projects': page_obj
+        'projects': projects,
+        'all_skills': all_skills,
+        'active_skill': active_skill
     }
-    return render(request, template, context)
+    #{"projects": <отфильтрованный queryset проектов>, "all_skills": <все добавленные в БД навыки>, "active_skill": <выбранный фильтр>}
+    return render(request, 'projects/project_list.html', context)
 
 @login_required
 def project_create(request):
@@ -28,7 +36,11 @@ def project_create(request):
         obj.owner = request.user
         form.save()
         return redirect('/projects/list/')
-    context = {'form': form}
+    context = {
+        'form': form,
+        "is_edit": False
+    }
+    #{"form": <форма создания/редактирования>, "is_edit": <флаг>}
     return render(request, 'projects/create-project.html', context)
 
 @login_required
@@ -46,7 +58,8 @@ def project_edit(request, project_id):
 
     form = ProjectForm(instance=project)
     context = {
-        'form': form
+        'form': form,
+        "is_edit": True
     }
     return render(request, 'projects/create-project.html', context)
 

@@ -23,13 +23,15 @@ def user_list(request):
 
     users = CustomUser.objects.all().filter(is_active=True).order_by('-id')
 
+    # Пагинатор на будущее
     paginator = Paginator(users, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        "participants": page_obj
+        "participants": users
     }
+    # {"participants": <queryset пользователей>}
     return render(request, template, context)
 
 @login_required
@@ -51,6 +53,9 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', context)
 
 
+
+# В ответ на POST запрос нужно создать нового пользователя в соответствии с полученными данными,
+# авторизировать текущего пользователя и переадресовать его на главную страницу (/projects/list).
 class RegistrationView(CreateView):
     form_class = CustomRegistrationForm
     template_name = 'users/register.html'

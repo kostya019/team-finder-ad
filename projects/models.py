@@ -2,8 +2,8 @@ from django.db import models
 
 class Project(models.Model):
     CHOICES = [
-        ("open", "Open"),
-        ("closed", "Closed")
+        ("open", "Открыт"),
+        ("closed", "Закрыт")
     ]
 
     name = models.CharField(
