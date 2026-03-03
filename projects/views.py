@@ -71,9 +71,27 @@ def project_complete(request, project_id):
     if request.user == project.owner:
         project.status = 'closed'
         project.save()
-        return JsonResponse({"status": "project_complete", "status": "ok"})
+        return JsonResponse({"status": "ok", "project_status": "closed"})
     else:
         return JsonResponse({"error": "Permission denied"}, status=403)
+
+@login_required
+def participate(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    is_participant = project.participants.filter(id=request.user.id).exists()
+
+    if not is_participant:
+        project.participants.add(request.user)
+        status = "add"
+    else:
+        project.participants.remove(request.user)
+        status = "remove"
+
+    return JsonResponse({
+        "status": "ok",
+        "participation_status": status
+    })
 
 def project_detail(request, project_id):
     template = 'projects/project-details.html'
