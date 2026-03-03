@@ -37,12 +37,12 @@ def project_create(request):
         obj = form.save(commit=False)
         obj.owner = request.user
         form.save()
+        obj.participants.add(obj.owner)
         return redirect('/projects/list/')
     context = {
         'form': form,
         "is_edit": False
     }
-    #{"form": <форма создания/редактирования>, "is_edit": <флаг>}
     return render(request, 'projects/create-project.html', context)
 
 @login_required
