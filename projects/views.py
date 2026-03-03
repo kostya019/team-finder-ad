@@ -100,7 +100,6 @@ def skill_add_search_remove(request, project_id=None, skill_id=None):
         if request.method == 'POST':
             body_unicode = request.body.decode('utf-8')
             if len(body_unicode) == 0:
-                project = get_object_or_404(Project, id=project_id)
                 skill = get_object_or_404(Skill, id=skill_id)
 
                 # Проверяем, есть ли связь между проектом и навыком
@@ -113,7 +112,6 @@ def skill_add_search_remove(request, project_id=None, skill_id=None):
             data = json.loads(body_unicode)
             skill_name_is_data = data.get('name', None)
             skill_id_is_data = data.get('skill_id', None)
-            print(body_unicode)
             if skill_id_is_data is not None:
                 skill = get_object_or_404(Skill, id=skill_id_is_data)
                 created = False
@@ -124,6 +122,7 @@ def skill_add_search_remove(request, project_id=None, skill_id=None):
             project.skills.add(skill)
             return JsonResponse({
                 "skill_id": skill.id,
+                "name": skill.name,
                 "created": created,
                 "added": True
             })
