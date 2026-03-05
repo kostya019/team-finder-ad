@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.core.paginator import Paginator
-from django.http import JsonResponse
+# from django.core.paginator import Paginator
+from django.http import JsonResponse, Http404
 import json
 
 from .models import Project, Skill
 from .forms import ProjectForm
+
 
 def project_list(request):
     all_skills = Skill.objects.all()
@@ -17,17 +18,17 @@ def project_list(request):
         projects = Project.objects.all().filter(status='open')
 
     # пагинатор на будущее
-    paginator = Paginator(projects, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    # paginator = Paginator(projects, 12)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
 
     context = {
         'projects': projects,
         'all_skills': all_skills,
         'active_skill': active_skill,
     }
-    #{"projects": <отфильтрованный queryset проектов>, "all_skills": <все добавленные в БД навыки>, "active_skill": <выбранный фильтр>}
     return render(request, 'projects/project_list.html', context)
+
 
 @login_required
 def project_create(request):
@@ -43,6 +44,7 @@ def project_create(request):
         "is_edit": False
     }
     return render(request, 'projects/create-project.html', context)
+
 
 @login_required
 def project_edit(request, project_id):
@@ -64,6 +66,7 @@ def project_edit(request, project_id):
     }
     return render(request, 'projects/create-project.html', context)
 
+
 @login_required
 def project_complete(request, project_id):
     project = get_object_or_404(Project, id=project_id)
@@ -73,6 +76,7 @@ def project_complete(request, project_id):
         return JsonResponse({"status": "ok", "project_status": "closed"})
     else:
         return JsonResponse({"error": "Permission denied"}, status=403)
+
 
 @login_required
 def participate(request, project_id):
@@ -92,6 +96,7 @@ def participate(request, project_id):
         "participation_status": status
     })
 
+
 def project_detail(request, project_id):
     template = 'projects/project-details.html'
 
@@ -107,6 +112,7 @@ def project_detail(request, project_id):
         'project': project,
     }
     return render(request, template, context)
+
 
 @login_required
 def skill_add_search_remove(request, project_id=None, skill_id=None):

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
+# from django.core.paginator import Paginator
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -7,16 +7,16 @@ from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib import messages
-from django.urls import reverse
 
-from projects.models import Project
 from .forms import CustomAuthenticationForm, CustomUserForm, CustomRegistrationForm
 from .models import CustomUser
+
 
 def profile(request, user_id):
     profile = get_object_or_404(CustomUser, id=user_id)
     context = {'user': profile}
     return render(request, 'users/user-details.html', context)
+
 
 def user_list(request):
     template = 'users/participants.html'
@@ -24,15 +24,15 @@ def user_list(request):
     users = CustomUser.objects.all().filter(is_active=True).order_by('-id')
 
     # Пагинатор на будущее
-    paginator = Paginator(users, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    # paginator = Paginator(users, 12)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
 
     context = {
         "participants": users
     }
-    # {"participants": <queryset пользователей>}
     return render(request, template, context)
+
 
 @login_required
 def edit_profile(request):
@@ -43,7 +43,10 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Профиль успешно обновлён!')
-            return redirect(reverse_lazy('users:profile', kwargs={'user_id': request.user.id}))
+            return redirect(reverse_lazy(
+                'users:profile',
+                kwargs={'user_id': request.user.id}
+            ))
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
@@ -54,6 +57,7 @@ def edit_profile(request):
     }
     return render(request, 'users/edit_profile.html', context)
 
+
 class RegistrationView(CreateView):
     form_class = CustomRegistrationForm
     template_name = 'users/register.html'
@@ -61,7 +65,7 @@ class RegistrationView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        user.is_active = True 
+        user.is_active = True
         user.save()
         login(self.request, user)
         return redirect(self.success_url)
@@ -78,14 +82,17 @@ class CustomLoginView(LoginView):
             login(self.request, user)
             return super().form_valid(form)
         else:
-            # Обработка случая, когда пользователь не найден или неактивен
-            form.add_error(None, 'Не удалось авторизоваться. Проверьте данные.')
+            form.add_error(
+                None,
+                'Не удалось авторизоваться. Проверьте данные.'
+            )
             return self.form_invalid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request  # Передаём request в форму
         return kwargs
+
 
 def custom_logout(request):
     logout(request)

@@ -60,7 +60,7 @@ WSGI_APPLICATION = "team_finder.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #    "default": {
 #        "ENGINE": "django.db.backends.postgresql",
 #        "NAME": config("POSTGRES_DB"),
@@ -69,7 +69,7 @@ WSGI_APPLICATION = "team_finder.wsgi.application"
 #        "HOST": config("POSTGRES_HOST", default="localhost"),
 #        "PORT": config("POSTGRES_PORT", default=5432, cast=int),
 #    }
-#}
+# }
 
 DATABASES = {
     'default': {

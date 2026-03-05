@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 
 from .models import CustomUser
+
 
 class CustomUserForm(forms.ModelForm):
     class Meta:
@@ -12,6 +12,7 @@ class CustomUserForm(forms.ModelForm):
         widgets = {
             'about': forms.Textarea(attrs={'rows': 4}),
         }
+
 
 class CustomRegistrationForm(UserCreationForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -53,6 +54,7 @@ class CustomRegistrationForm(UserCreationForm):
             user.save()
         return user
 
+
 class CustomAuthenticationForm(AuthenticationForm):
     email = forms.EmailField(
         label='Email',
@@ -82,13 +84,13 @@ class CustomAuthenticationForm(AuthenticationForm):
             if self.user_cache is None:
                 raise forms.ValidationError(
                     'Неверные email или пароль.',
-            code='invalid_login'
-        )
+                    code='invalid_login'
+                )
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(
-            'Аккаунт деактивирован.',
-            code='inactive'
-        )
+                    'Аккаунт деактивирован.',
+                    code='inactive'
+                )
         return self.cleaned_data
 
     def get_user(self):

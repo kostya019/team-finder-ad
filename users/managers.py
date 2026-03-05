@@ -1,14 +1,13 @@
 from django.contrib.auth.models import BaseUserManager
 from PIL import Image, ImageDraw, ImageFont
-import os
-from django.conf import settings
-import random
-import logging
 from django.core.files import File
 from django.core.files.storage import default_storage
 import io
+import random
+import logging
 
 logger = logging.getLogger(__name__)
+
 
 class CustomUserManager(BaseUserManager):
 
@@ -20,7 +19,6 @@ class CustomUserManager(BaseUserManager):
         if not surname:
             raise ValueError('Пользователь должен иметь Фамилию')
         email = self.normalize_email(email)
-        print(avatar)
         if avatar is None:
             try:
                 avatar_image = self.generate_avatar(name)  # Возвращает PIL.Image
@@ -36,8 +34,8 @@ class CustomUserManager(BaseUserManager):
                     # Сохраняем в хранилище и получаем путь
                     avatar_path = default_storage.save(
                         f'avatars/{avatar_filename}',
-                File(image_buffer)
-            )
+                        File(image_buffer)
+                    )
                     avatar = avatar_path  # Теперь это путь, который поймёт ImageField
                 else:
                     raise ValueError("Не удалось сгенерировать аватар")
@@ -45,13 +43,6 @@ class CustomUserManager(BaseUserManager):
                 logger.error(f"Ошибка генерации аватара для {name}: {e}")
                 avatar = None  # Продолжаем без аватара
 
-        #    try:
-        #        avatar = self.generate_avatar(name)
-        #        if not avatar:
-        #            raise ValueError("Сгенерированный аватар имеет некорректный путь")
-        #    except Exception as e:
-        #        logger.error(f"Ошибка генерации аватара для {name}: {e}")
-        #        raise ValueError("Не удалось сгенерировать аватар")
         user = self.model(
             email=email,
             name=name,
@@ -112,17 +103,7 @@ class CustomUserManager(BaseUserManager):
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         x = (128 - text_width) // 2
-        y = (128 - text_height) // 2 - 10  # Немного поднимаем для визуального баланса
+        y = (128 - text_height) // 2 - 10
 
         draw.text((x, y), first_letter, fill=text_color, font=font)
         return image
-        # Формируем путь сохранения
-        #avatar_dir = 'avatars'
-        #avatar_filename = f'avatar_{name}_{random.randint(1000, 9999)}.png'
-        #avatar_path = os.path.join(avatar_dir, avatar_filename)
-        ## Сохраняем изображение в медиа-каталог Django
-        #media_path = os.path.join(settings.MEDIA_ROOT, avatar_path)
-        #image.save(media_path)
-#
-        #avatar_url = avatar_path
-        #return avatar_url
