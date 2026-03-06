@@ -31,6 +31,7 @@ class Project(models.Model):
     )
 
     github_url = models.URLField(
+        unique=True,
         blank=True,
         null=True,
         verbose_name='Ссылка на Github'
