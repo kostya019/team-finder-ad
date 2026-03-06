@@ -12,6 +12,7 @@ from .forms import CustomAuthenticationForm, CustomUserForm, CustomRegistrationF
 from .models import CustomUser
 
 
+@login_required
 def profile(request, user_id):
     profile = get_object_or_404(CustomUser, id=user_id)
     context = {'user': profile}
@@ -94,6 +95,7 @@ class CustomLoginView(LoginView):
         return kwargs
 
 
+@login_required
 def custom_logout(request):
     logout(request)
     return redirect('/projects/list/')

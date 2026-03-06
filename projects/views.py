@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-# from django.core.paginator import Paginator
+from django.core.paginator import Paginator
 from django.http import JsonResponse, Http404
 import json
 
@@ -18,12 +18,12 @@ def project_list(request):
         projects = Project.objects.all().filter(status='open')
 
     # пагинатор на будущее
-    # paginator = Paginator(projects, 12)
-    # page_number = request.GET.get('page')
-    # page_obj = paginator.get_page(page_number)
+    paginator = Paginator(projects, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        'projects': projects,
+        'projects': page_obj,
         'all_skills': all_skills,
         'active_skill': active_skill,
     }
