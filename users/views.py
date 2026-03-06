@@ -4,17 +4,35 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib import messages
 
+from projects.models import Project
 from .forms import CustomAuthenticationForm, CustomUserForm, CustomRegistrationForm
 from .models import CustomUser
 
 
 def profile(request, user_id):
     profile = get_object_or_404(CustomUser, id=user_id)
-    context = {'user': profile}
+
+    if request.user.id != user_id:
+        projects = Project.objects.all().filter(
+            Q(owner=profile)
+            & Q(status='open')
+            )
+    else:
+        projects = Project.objects.all().filter(owner=profile)
+
+    paginator = Paginator(projects, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'user': profile,
+        'page_obj': page_obj
+        }
     return render(request, 'users/user-details.html', context)
 
 

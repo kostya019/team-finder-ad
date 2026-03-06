@@ -58,10 +58,10 @@
         </div>
     </div>
 
-    <h3>Проекты ({{ user.owned_projects.all|length }})</h3>
+    <h3>Проекты ({{ page_obj.paginator.count }})</h3>
 
     <div class="collapsed-project-grid">
-        {% for project in user.owned_projects.all %}
+        {% for project in page_obj %}
         <div class="collapsed-project-card">
             <div class="collapsed-project-card-header">
                 <h4><a href="/projects/{{ project.id }}">{{ project.name }}</a></h4>
@@ -103,6 +103,9 @@
         <p>Пока нет проектов</p>
         {% endfor %}
     </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+    {% include "includes/paginator.html" %}
+    {% endif %}
 </div>
 {% endblock %}
 {% endwith %}

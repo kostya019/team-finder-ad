@@ -42,6 +42,8 @@
     {% else %}
     {% include 'includes/empty-project-card.html' with empty_title="Пока нет участников" empty_message="Попробуйте сбросить фильтр" button_link="/users/list" button_text="Сбросить" %}
     {% endif %}
+    {% if page_obj.paginator.num_pages > 1 %}
     {% include "includes/paginator.html" %}
+    {% endif %}
 </div>
 {% endblock %}
