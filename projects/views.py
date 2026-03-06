@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.shortcuts import redirect
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -73,6 +74,7 @@ def project_edit(request, project_id):
 
 
 @login_required
+@require_POST
 def project_complete(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     if request.user == project.owner:
@@ -84,8 +86,18 @@ def project_complete(request, project_id):
 
 
 @login_required
+@require_POST
 def participate(request, project_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
     project = get_object_or_404(Project, id=project_id)
+
+    if project.status == 'closed':
+        return JsonResponse({'error': 'Project is closed'}, status=403)
+
+    if project.owner == request.user:
+        return JsonResponse({'error': 'Cannot remove owner from participants'}, status=403)
 
     is_participant = project.participants.filter(id=request.user.id).exists()
 
@@ -96,10 +108,19 @@ def participate(request, project_id):
         project.participants.remove(request.user)
         status = "remove"
 
+    participants_count = project.participants.count()
+
     return JsonResponse({
         "status": "ok",
-        "participation_status": status
+        "participation_status": status,
+        "project_id": project_id,
+        "participants_count": participants_count,
+        "is_participant": not is_participant
     })
+    #return JsonResponse({
+    #    "status": "ok",
+    #    "participation_status": status
+    #})
 
 
 def project_detail(request, project_id):
