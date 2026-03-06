@@ -117,10 +117,6 @@ def participate(request, project_id):
         "participants_count": participants_count,
         "is_participant": not is_participant
     })
-    #return JsonResponse({
-    #    "status": "ok",
-    #    "participation_status": status
-    #})
 
 
 def project_detail(request, project_id):

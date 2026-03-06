@@ -16,16 +16,25 @@
 
         <div class="avatar-upload">
             <div class="avatar-preview">
-                {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" alt="Аватар">
-                {% else %}
-                    <img src="{% static 'images/default-avatar.png' %}" alt="Аватар по умолчанию">
-                {% endif %}
+                <!-- Превью текущего/нового аватара -->
+                <img id="avatar-preview"
+                    src="{{ user.avatar.url|default:'/static/default-avatar.png' }}"
+                    alt="Аватар пользователя"
+                    class="avatar-image">
+
+                <!-- Скрытое поле для загрузки файла -->
+                <input type="file"
+                    id="id_avatar"
+                    name="avatar"
+                    accept="image/*"
+                    style="display: none;"
+                    onchange="previewAvatar(event)">
+
+                <!-- Оверлей с кнопкой -->
                 <div class="overlay">
                     <button type="button" onclick="document.getElementById('id_avatar').click()">Заменить</button>
                 </div>
             </div>
-            {{ form.avatar }}
         </div>
 
         <div class="form-row">
@@ -71,4 +80,5 @@
         </div>
     </form>
 </div>
+<script src="{% static 'js/image.js' %}"></script>
 {% endblock %}
