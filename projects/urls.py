@@ -14,8 +14,8 @@ urlpatterns = [
 
     path(
         '<int:project_id>/skills/<int:skill_id>/remove/',
-        views.skill_add_search_remove, name='remove_skill'
+        views.skill_remove, name='remove_skill'
     ),
-    path('<int:project_id>/skills/add/', views.skill_add_search_remove, name='add'),
-    path('skills/', views.skill_add_search_remove, name='search'),
+    path('<int:project_id>/skills/add/', views.skill_add, name='add'),
+    path('skills/', views.skill_search, name='search'),
 ]

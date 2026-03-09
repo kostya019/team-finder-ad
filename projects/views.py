@@ -96,9 +96,6 @@ def project_complete(request, project_id):
 @login_required
 @require_POST
 def participate(request, project_id):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
-
     project = get_object_or_404(Project, id=project_id)
 
     if project.status == 'closed':
@@ -143,56 +140,79 @@ def project_detail(request, project_id):
     }
     return render(request, template, context)
 
-
 @login_required
-def skill_add_search_remove(request, project_id=None, skill_id=None):
+def skill_search(request):
+    """Поиск навыков для автодополнения."""
     q = request.GET.get('q', '').strip()
-
-    # Обработка добавления навыка в проект
-    if project_id is not None:
-        project = get_object_or_404(Project, id=project_id)
-
-        # Проверка прав доступа: только владелец проекта может вносить изменения
-        if request.user != project.owner:
-            return JsonResponse({"error": "Permission denied"}, status=403)
-
-        if request.method == 'POST':
-            body_unicode = request.body.decode('utf-8')
-            if len(body_unicode) == 0:
-                skill = get_object_or_404(Skill, id=skill_id)
-
-                # Проверяем, есть ли связь между проектом и навыком
-                if skill in project.skills.all():
-                    project.skills.remove(skill)  # Удаляем связь через ManyToManyField
-                    return JsonResponse({"status": "removed_from_project", "skill_id": skill_id})
-                else:
-                    return JsonResponse({"error": "Skill not found in project"})
-
-            data = json.loads(body_unicode)
-            skill_name_is_data = data.get('name', None)
-            skill_id_is_data = data.get('skill_id', None)
-            if skill_id_is_data is not None:
-                skill = get_object_or_404(Skill, id=skill_id_is_data)
-                created = False
-            elif skill_name_is_data is not None:
-                skill, created = Skill.objects.get_or_create(name=skill_name_is_data.strip())
-
-            # Добавляем связь навыка с проектом
-            project.skills.add(skill)
-            return JsonResponse({
-                "skill_id": skill.id,
-                "name": skill.name,
-                "created": created,
-                "added": True
-            })
-
-    # Обработка поиска навыков (автодополнение)
     if not q:
         return JsonResponse([], safe=False)
 
-    skills_queryset = Skill.objects.filter(
-        name__istartswith=q
-    ).order_by('name')[:10]
+    skills = Skill.objects.filter(name__istartswith=q).order_by('name')[:10]
+    results = [{"id": skill.id, "name": skill.name} for skill in skills]
+    return JsonResponse(results, safe=False)
 
-    skills_list = [{'id': skill.id, 'name': skill.name} for skill in skills_queryset]
-    return JsonResponse(skills_list, safe=False)
+@login_required
+def skill_add(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.user != project.owner:
+        return JsonResponse({"error": "Permission denied"}, status=403)
+
+    if request.method != 'POST':
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        skill_name = data.get('name')
+        skill_id = data.get('skill_id')
+
+        if not skill_id and not skill_name:
+            return JsonResponse(
+                {"error": "Either 'skill_id' or 'name' must be provided"},
+                status=400
+            )
+
+        if skill_id:
+            skill = get_object_or_404(Skill, id=skill_id)
+            created = False
+        else:
+            skill, created = Skill.objects.get_or_create(
+                name=skill_name.strip(),
+                defaults={'created_by': request.user}
+            )
+
+        project.skills.add(skill)
+        # Явно возвращаем ID навыка
+        return JsonResponse({
+            "skill_id": skill.id,
+            "name": skill.name,
+            "created": created,
+            "added": True
+        })
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@login_required
+def skill_remove(request, project_id, skill_id):
+    """Удаление навыка из проекта."""
+    project = get_object_or_404(Project, id=project_id)
+
+    if request.user != project.owner:
+        return JsonResponse({"error": "Permission denied"}, status=403)
+
+    if request.method != 'POST':
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+
+    skill = get_object_or_404(Skill, id=skill_id)
+
+    # Эффективная проверка наличия связи через exists()
+    if project.skills.filter(id=skill.id).exists():
+        project.skills.remove(skill)
+        return JsonResponse({
+            "status": "removed_from_project",
+            "skill_id": skill_id
+        })
+    else:
+        return JsonResponse({"error": "Skill not found in project"}, status=404)
