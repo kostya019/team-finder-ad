@@ -5,10 +5,12 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/error.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="auth-card">
+    
     <h2>Регистрация</h2>
     <form method="post">
         {% csrf_token %}
@@ -18,11 +20,21 @@
         </div>
         {{ form.email.label_tag }} {{ form.email }}
         {{ form.password.label_tag }} {{ form.password }}
-        {% for error in form.errors.values %}
-        <p style="color: red;">{{error}}</p>
-        {% endfor %}
+        {% if form.errors %}
+        {% endif %}
         <button type="submit">Зарегистрироваться</button>
+        <div class="minimal-errors">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                <div class="error-item">
+                    <span class="error-icon">!</span>
+                    <span class="error-text">{{ error }}</span>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
     </form>
+    
     <p class="auth-link">Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>
 </div>
 {% endblock %}

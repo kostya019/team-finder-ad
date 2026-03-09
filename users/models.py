@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+import re
+from django.core.exceptions import ValidationError
+
+from .validators import validate_no_digits
 from .managers import CustomUserManager
 
 
@@ -11,11 +15,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     name = models.CharField(
         max_length=124,
+        validators=[validate_no_digits],
         verbose_name='Имя пользователя'
     )
 
     surname = models.CharField(
         max_length=124,
+        validators=[validate_no_digits],
         verbose_name='Фамилия пользователя'
     )
 

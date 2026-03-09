@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 <link rel="stylesheet" href="{% static 'css/profile_edit.css' %}">
 <link rel="stylesheet" href="{% static 'css/create-project.css' %}">
+<link rel="stylesheet" href="{% static 'css/error.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -37,13 +38,16 @@
     </div>
 
     {% if form.errors %}
-    <div class="form-errors">
-      {% for field, errors in form.errors.items %}
-      {% for error in errors %}
-      <p>{{ error }}</p>
-      {% endfor %}
-      {% endfor %}
-    </div>
+      <div class="minimal-errors">
+        {% for field, errors in form.errors.items %}
+          {% for error in errors %}
+          <div class="error-item">
+              <span class="error-icon">!</span>
+              <span class="error-text">{{ error }}</span>
+          </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
     {% endif %}
 
     <div class="form-actions">

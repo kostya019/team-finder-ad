@@ -17,8 +17,8 @@ class CustomUserForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if phone:
-            normalized_phone = validate_phone_number(phone)
-            return normalized_phone
+            validated_phone = validate_phone_number(phone)
+            return validated_phone
         return phone
 
     def clean_github_url(self):

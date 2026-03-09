@@ -67,28 +67,6 @@
         </div>
 
         {% if form.errors %}
-        <div class="form-errors">
-            {% for field, errors in form.errors.items %}
-                {% for error in errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        
-        
-        <!--{% if form.errors %}
-            <div class="error-banner">
-                {% for field, errors in form.errors.items %}
-                    {% for error in errors %}
-                        {{ error }}{% if not forloop.last %}; {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-        {% endif %}-->
-
-        <!--{% if form.errors %}
             <div class="minimal-errors">
                 {% for field, errors in form.errors.items %}
                     {% for error in errors %}
@@ -99,7 +77,7 @@
                     {% endfor %}
                 {% endfor %}
             </div>
-        {% endif %}-->
+        {% endif %}
 
         <div class="form-actions">
             <a href="/users/{{ user.id }}" class="cancel-button">Отмена</a>
