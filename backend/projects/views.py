@@ -15,7 +15,7 @@ from .forms import ProjectForm
 
 def project_list(request):
     all_skills = Skill.objects.all()
-    active_skill = request.GET.get('skill')
+    active_skill = request.GET.get('skill', '').strip()
 
     if active_skill:
         projects = Project.objects.all().filter(
