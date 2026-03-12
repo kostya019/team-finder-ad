@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 
 logger = logging.getLogger(__name__)
 
+
 def get_font(size=80):
     # Список возможных путей к шрифтам в контейнере
     font_paths = [
@@ -24,6 +25,7 @@ def get_font(size=80):
                 continue
     # Запасной вариант – дефолтный шрифт (будет мелким)
     return ImageFont.load_default()
+
 
 def generate_avatar_image(name: str) -> Image.Image:
     """Генерирует изображение аватара с первой буквой имени."""
