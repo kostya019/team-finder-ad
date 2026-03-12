@@ -120,8 +120,8 @@
         body: JSON.stringify({ skill_id: skillId }),
       });
       if (res.ok) {
-        const skill = await res.json();
-        appendChip(skill.id, skill.name);
+        const data = await res.json();
+        appendChip(data.skill_id, data.name);
       }
     }
 
@@ -135,8 +135,8 @@
         body: JSON.stringify({ name }),
       });
       if (res.ok) {
-        const skill = await res.json();
-        appendChip(skill.id, skill.name);
+        const data = await res.json();
+        appendChip(data.skill_id, data.name);
       }
     }
 
