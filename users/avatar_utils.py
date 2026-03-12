@@ -7,6 +7,7 @@ from django.core.files.storage import default_storage
 
 logger = logging.getLogger(__name__)
 
+
 def generate_avatar_image(name: str) -> Image.Image:
     """Генерирует изображение аватара с первой буквой имени."""
     colors = [
@@ -37,6 +38,7 @@ def generate_avatar_image(name: str) -> Image.Image:
 
     draw.text((x, y), first_letter, fill=text_color, font=font)
     return image
+
 
 def save_avatar_image(image: Image.Image, name: str, surname: str) -> str:
     """Сохраняет изображение в хранилище и возвращает путь."""

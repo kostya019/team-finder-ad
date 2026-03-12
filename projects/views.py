@@ -21,7 +21,7 @@ def project_list(request):
         projects = Project.objects.all().filter(
             Q(skills__name=active_skill)
             & Q(status='open')
-            )
+        )
     else:
         projects = Project.objects.all().filter(status='open')
 
@@ -152,6 +152,7 @@ def skill_search(request):
     results = [{"id": skill.id, "name": skill.name} for skill in skills]
     return JsonResponse(results, safe=False)
 
+
 @login_required
 def skill_add(request, project_id):
     project = get_object_or_404(Project, id=project_id)
@@ -191,6 +192,7 @@ def skill_add(request, project_id):
         return JsonResponse({"error": "Invalid JSON"}, status=400)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
 
 @login_required
 def skill_remove(request, project_id, skill_id):

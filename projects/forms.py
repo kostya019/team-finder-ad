@@ -3,6 +3,7 @@ from django import forms
 from .models import Project
 from .validators import validate_github_repo_url
 
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -14,9 +15,9 @@ class ProjectForm(forms.ModelForm):
             validated_url = validate_github_repo_url(github_url)
             return validated_url
         return github_url
-    
+
     def save(self, commit=True):
-        instance = super().save(commit=False) 
+        instance = super().save(commit=False)
         if 'github_url' in self.cleaned_data:
             instance.github_url = self.cleaned_data['github_url']
         if commit:

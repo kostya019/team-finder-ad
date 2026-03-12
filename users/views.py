@@ -21,7 +21,7 @@ def profile(request, user_id):
         projects = Project.objects.all().filter(
             Q(owner=profile)
             & Q(status='open')
-            )
+        )
     else:
         projects = Project.objects.all().filter(owner=profile)
 
@@ -32,7 +32,7 @@ def profile(request, user_id):
     context = {
         'user': profile,
         'page_obj': page_obj
-        }
+    }
     return render(request, 'users/user-details.html', context)
 
 

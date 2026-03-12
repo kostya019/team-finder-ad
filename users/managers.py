@@ -1,5 +1,9 @@
 from django.contrib.auth.models import BaseUserManager
 from .avatar_utils import generate_avatar_image, save_avatar_image
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class CustomUserManager(BaseUserManager):
 

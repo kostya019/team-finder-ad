@@ -6,6 +6,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 @receiver(post_save, sender=CustomUser)
 def create_user_avatar(sender, instance, created, **kwargs):
     """Создаёт аватар, если пользователь новый и аватар не задан."""

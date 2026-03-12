@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import re
 
+
 def validate_github_repo_url(value):
     """
     Валидатор для проверки ссылки на конкретный репозиторий GitHub.

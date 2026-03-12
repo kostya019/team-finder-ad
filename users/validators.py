@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+
 def validate_no_digits(value):
     value = value.strip()
     if not value:
@@ -11,6 +12,7 @@ def validate_no_digits(value):
     if re.search(r'\d', value):
         raise ValidationError(_('Имя не должно содержать цифр.'))
     return value
+
 
 def validate_phone_number(value):
     """

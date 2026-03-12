@@ -11,7 +11,13 @@ class CustomUserForm(forms.ModelForm):
         model = CustomUser
         fields = ["name", "surname", "github_url", "phone", "avatar", "about",]
         widgets = {
-            'about': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Ваш профиль — как открытый репозиторий. Заполните его, чтобы вас нашли!'}),
+            'about': forms.Textarea(
+                attrs={
+                    'rows': 4,
+                    'placeholder':
+                    'Ваш профиль — как открытый репозиторий. Заполните его, чтобы вас нашли!'
+                }
+            ),
         }
 
     def clean_phone(self):
@@ -27,7 +33,7 @@ class CustomUserForm(forms.ModelForm):
             validated_url = validate_github_url(github_url)
             return validated_url
         return github_url
-    
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         if 'phone' in self.cleaned_data:
