@@ -6,13 +6,13 @@
       "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
       "last_login": null,
       "is_superuser": false,
-      "email": "ivan@example.com",
+      "email": "ivan.ivanov@example.com",
       "name": "Иван",
       "surname": "Иванов",
-      "avatar": null,
-      "phone": "+79001234567",
-      "github_url": "https://github.com/ivan",
-      "about": "Разработчик Python, люблю создавать веб-приложения.",
+      "avatar": "",
+      "phone": "+79001234501",
+      "github_url": "https://github.com/ivanov",
+      "about": "Fullstack разработчик, увлекаюсь Python и JavaScript.",
       "is_active": true,
       "is_staff": false,
       "groups": [],
@@ -26,13 +26,13 @@
       "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
       "last_login": null,
       "is_superuser": false,
-      "email": "petr@example.com",
+      "email": "petr.petrov@example.com",
       "name": "Петр",
       "surname": "Петров",
       "avatar": "",
-      "phone": "+79007654321",
-      "github_url": "https://github.com/petr",
-      "about": "Бэкенд-разработчик, интересуюсь базами данных.",
+      "phone": "+79001234502",
+      "github_url": "https://github.com/petrov",
+      "about": "Бэкенд-разработчик, специалист по Django и базам данных.",
       "is_active": true,
       "is_staff": false,
       "groups": [],
@@ -46,13 +46,209 @@
       "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
       "last_login": null,
       "is_superuser": false,
-      "email": "anna@example.com",
+      "email": "anna.smirnova@example.com",
       "name": "Анна",
       "surname": "Смирнова",
       "avatar": "",
-      "phone": "+79005556677",
+      "phone": "+79001234503",
       "github_url": "",
-      "about": "Фронтенд-разработчик, увлекаюсь React и мобильными приложениями.",
+      "about": "Фронтенд-разработчик, React и TypeScript.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "dmitry.kozlov@example.com",
+      "name": "Дмитрий",
+      "surname": "Козлов",
+      "avatar": "",
+      "phone": "+79001234504",
+      "github_url": "https://github.com/kozlov",
+      "about": "DevOps инженер, автоматизация и контейнеризация.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "elena.volkova@example.com",
+      "name": "Елена",
+      "surname": "Волкова",
+      "avatar": "",
+      "phone": "+79001234505",
+      "github_url": "https://github.com/volkova",
+      "about": "Аналитик данных, Python, SQL, визуализация.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "alexey.nikolaev@example.com",
+      "name": "Алексей",
+      "surname": "Николаев",
+      "avatar": "",
+      "phone": "+79001234506",
+      "about": "Мобильный разработчик, iOS и Android.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "olga.morozova@example.com",
+      "name": "Ольга",
+      "surname": "Морозова",
+      "avatar": "",
+      "phone": "+79001234507",
+      "github_url": "https://github.com/morozova",
+      "about": "Тестировщик, автоматизация тестирования.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "mikhail.pavlov@example.com",
+      "name": "Михаил",
+      "surname": "Павлов",
+      "avatar": "",
+      "phone": "+79001234508",
+      "github_url": "https://github.com/pavlov",
+      "about": "Системный администратор, Linux, сети.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "tatyana.sokolova@example.com",
+      "name": "Татьяна",
+      "surname": "Соколова",
+      "avatar": "",
+      "phone": "+79001234509",
+      "about": "UX/UI дизайнер, Figma, пользовательские исследования.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 10,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "andrey.egorov@example.com",
+      "name": "Андрей",
+      "surname": "Егоров",
+      "avatar": "",
+      "phone": "+79001234510",
+      "github_url": "https://github.com/egorov",
+      "about": "Go-разработчик, микросервисы.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 11,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "nadezhda.andreeva@example.com",
+      "name": "Надежда",
+      "surname": "Андреева",
+      "avatar": "",
+      "phone": "+79001234511",
+      "about": "Project manager, Agile, Scrum.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 12,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "sergey.fedorov@example.com",
+      "name": "Сергей",
+      "surname": "Федоров",
+      "avatar": "",
+      "phone": "+79001234512",
+      "github_url": "https://github.com/fedorov",
+      "about": "Data scientist, машинное обучение.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 13,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "yulia.andreeva@example.com",
+      "name": "Юлия",
+      "surname": "Андреева",
+      "avatar": "",
+      "phone": "+79001234513",
+      "about": "Веб-разработчик, полный стек.",
       "is_active": true,
       "is_staff": false,
       "groups": [],
@@ -102,30 +298,72 @@
     }
   },
   {
+    "model": "projects.skill",
+    "pk": 7,
+    "fields": {
+      "name": "HTML"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 8,
+    "fields": {
+      "name": "CSS"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 9,
+    "fields": {
+      "name": "Docker"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 10,
+    "fields": {
+      "name": "Kubernetes"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 11,
+    "fields": {
+      "name": "PostgreSQL"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 12,
+    "fields": {
+      "name": "MongoDB"
+    }
+  },
+  {
     "model": "projects.project",
     "pk": 1,
     "fields": {
-      "name": "Веб-приложение для управления задачами",
-      "description": "Создать простое веб-приложение для создания и отслеживания задач. Использовать Django для бэкенда и Bootstrap для фронтенда.",
+      "name": "Интернет-магазин на Django",
+      "description": "Разработка полнофункционального интернет-магазина с корзиной, оплатой и админкой.",
       "owner": 1,
-      "created_at": "2025-03-01T10:00:00Z",
-      "github_url": "https://github.com/ivan/taskmanager",
+      "created_at": "2025-02-01T10:00:00Z",
+      "github_url": "https://github.com/ivanov/django_shop",
       "status": "open",
-      "participants": [1, 2],
-      "skills": [1, 2, 3]
+      "participants": [1, 2, 5],
+      "skills": [1, 2, 5, 6]
     }
   },
   {
     "model": "projects.project",
     "pk": 2,
     "fields": {
-      "name": "Мобильное приложение для фитнеса",
-      "description": "Разработать мобильное приложение для отслеживания тренировок и питания. Использовать React Native.",
+      "name": "Чат-приложение на React",
+      "description": "Создать real-time чат с использованием React и WebSockets.",
       "owner": 3,
-      "created_at": "2025-03-05T14:30:00Z",
+      "created_at": "2025-02-05T14:30:00Z",
       "github_url": "",
       "status": "open",
-      "participants": [3],
+      "participants": [3, 6],
       "skills": [3, 4, 6]
     }
   },
@@ -133,14 +371,163 @@
     "model": "projects.project",
     "pk": 3,
     "fields": {
-      "name": "Анализ данных",
-      "description": "Провести анализ открытых данных по COVID-19 с использованием Python и SQL. Построить графики и сделать выводы.",
-      "owner": 2,
-      "created_at": "2025-02-20T09:15:00Z",
-      "github_url": "https://github.com/petr/covid-analysis",
+      "name": "Анализ данных о продажах",
+      "description": "Провести анализ данных о продажах, построить дашборд и сделать прогноз.",
+      "owner": 5,
+      "created_at": "2025-01-20T09:00:00Z",
+      "github_url": "https://github.com/volkova/sales_analysis",
       "status": "closed",
-      "participants": [2, 1],
-      "skills": [1, 5]
+      "participants": [5, 12],
+      "skills": [1, 5, 11]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 4,
+    "fields": {
+      "name": "Автоматизация деплоя с Docker и Kubernetes",
+      "description": "Настроить CI/CD пайплайн для микросервисного приложения.",
+      "owner": 4,
+      "created_at": "2025-02-10T11:15:00Z",
+      "github_url": "https://github.com/kozlov/devops_project",
+      "status": "open",
+      "participants": [4, 8],
+      "skills": [9, 10, 6]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 5,
+    "fields": {
+      "name": "Мобильное приложение для заметок",
+      "description": "Кроссплатформенное приложение для заметок с синхронизацией.",
+      "owner": 6,
+      "created_at": "2025-02-12T16:20:00Z",
+      "status": "open",
+      "participants": [6],
+      "skills": [3, 4, 12]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 6,
+    "fields": {
+      "name": "Тестирование API",
+      "description": "Написать автотесты для REST API и интегрировать в CI.",
+      "owner": 7,
+      "created_at": "2025-02-15T08:45:00Z",
+      "github_url": "https://github.com/morozova/api_tests",
+      "status": "open",
+      "participants": [7, 2],
+      "skills": [1, 6]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 7,
+    "fields": {
+      "name": "Сайт-портфолио",
+      "description": "Разработка лендинга для портфолио дизайнера.",
+      "owner": 9,
+      "created_at": "2025-02-18T12:00:00Z",
+      "status": "open",
+      "participants": [9, 13],
+      "skills": [3, 4, 7, 8]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 8,
+    "fields": {
+      "name": "Сервис коротких ссылок",
+      "description": "Создать сервис для сокращения ссылок на Go.",
+      "owner": 10,
+      "created_at": "2025-02-20T13:30:00Z",
+      "github_url": "https://github.com/egorov/shortlink",
+      "status": "open",
+      "participants": [10, 1],
+      "skills": [1, 5, 6]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 9,
+    "fields": {
+      "name": "Управление проектами (PM система)",
+      "description": "Разработать простую систему для управления задачами в команде.",
+      "owner": 11,
+      "created_at": "2025-02-22T10:10:00Z",
+      "status": "open",
+      "participants": [11, 3, 7],
+      "skills": [2, 4, 5]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 10,
+    "fields": {
+      "name": "Прогнозирование временных рядов",
+      "description": "Построить модель прогнозирования для финансовых данных.",
+      "owner": 12,
+      "created_at": "2025-02-25T14:00:00Z",
+      "github_url": "https://github.com/fedorov/time_series",
+      "status": "open",
+      "participants": [12, 5],
+      "skills": [1, 5, 11]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 11,
+    "fields": {
+      "name": "Личный блог на Django",
+      "description": "Создать блог с возможностью публикации статей и комментариев.",
+      "owner": 13,
+      "created_at": "2025-02-28T09:30:00Z",
+      "status": "open",
+      "participants": [13],
+      "skills": [1, 2, 7, 8]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 12,
+    "fields": {
+      "name": "Редизайн сайта компании",
+      "description": "Обновить дизайн и фронтенд корпоративного сайта.",
+      "owner": 9,
+      "created_at": "2025-03-01T11:45:00Z",
+      "status": "open",
+      "participants": [9, 3],
+      "skills": [4, 7, 8]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 13,
+    "fields": {
+      "name": "База данных для библиотеки",
+      "description": "Спроектировать и реализовать БД для библиотеки с SQL-запросами.",
+      "owner": 2,
+      "created_at": "2025-03-02T15:20:00Z",
+      "github_url": "https://github.com/petrov/library_db",
+      "status": "closed",
+      "participants": [2, 4, 8],
+      "skills": [5, 11]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 14,
+    "fields": {
+      "name": "Интеграция с Telegram ботом",
+      "description": "Создать Telegram бота для уведомлений и интеграции с внешним API.",
+      "owner": 1,
+      "created_at": "2025-03-03T12:00:00Z",
+      "github_url": "https://github.com/ivanov/tg_bot",
+      "status": "open",
+      "participants": [1, 6, 10],
+      "skills": [1, 2, 3]
     }
   }
 ]
