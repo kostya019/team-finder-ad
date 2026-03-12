@@ -1,0 +1,146 @@
+[
+  {
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "ivan@example.com",
+      "name": "Иван",
+      "surname": "Иванов",
+      "avatar": "avatars/user1.jpg",
+      "phone": "+79001234567",
+      "github_url": "https://github.com/ivan",
+      "about": "Разработчик Python, люблю создавать веб-приложения.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "petr@example.com",
+      "name": "Петр",
+      "surname": "Петров",
+      "avatar": "avatars/user2.jpg",
+      "phone": "+79007654321",
+      "github_url": "https://github.com/petr",
+      "about": "Бэкенд-разработчик, интересуюсь базами данных.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$dH0lP6u7Z5a0$4x0j6k8L9m2n3b4v5c6x7z8a9s0d1f2g3h4j5k6l7=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "anna@example.com",
+      "name": "Анна",
+      "surname": "Смирнова",
+      "avatar": "avatars/user3.jpg",
+      "phone": "+79005556677",
+      "github_url": "",
+      "about": "Фронтенд-разработчик, увлекаюсь React и мобильными приложениями.",
+      "is_active": true,
+      "is_staff": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 1,
+    "fields": {
+      "name": "Python"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 2,
+    "fields": {
+      "name": "Django"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 3,
+    "fields": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 4,
+    "fields": {
+      "name": "React"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 5,
+    "fields": {
+      "name": "SQL"
+    }
+  },
+  {
+    "model": "projects.skill",
+    "pk": 6,
+    "fields": {
+      "name": "Git"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+      "name": "Веб-приложение для управления задачами",
+      "description": "Создать простое веб-приложение для создания и отслеживания задач. Использовать Django для бэкенда и Bootstrap для фронтенда.",
+      "owner": 1,
+      "created_at": "2025-03-01T10:00:00Z",
+      "github_url": "https://github.com/ivan/taskmanager",
+      "status": "open",
+      "participants": [1, 2],
+      "skills": [1, 2, 3]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+      "name": "Мобильное приложение для фитнеса",
+      "description": "Разработать мобильное приложение для отслеживания тренировок и питания. Использовать React Native.",
+      "owner": 3,
+      "created_at": "2025-03-05T14:30:00Z",
+      "github_url": "",
+      "status": "open",
+      "participants": [3],
+      "skills": [3, 4, 6]
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+      "name": "Анализ данных",
+      "description": "Провести анализ открытых данных по COVID-19 с использованием Python и SQL. Построить графики и сделать выводы.",
+      "owner": 2,
+      "created_at": "2025-02-20T09:15:00Z",
+      "github_url": "https://github.com/petr/covid-analysis",
+      "status": "closed",
+      "participants": [2, 1],
+      "skills": [1, 5]
+    }
+  }
+]
