@@ -13,6 +13,8 @@ AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = '/projects/list/'
 LOGIN_URL = '/users/login/'
 
+ALLOWED_GITHUB_DOMAINS = ('github.com', 'www.github.com')
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend']
 # Application definition
 
@@ -24,6 +26,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 INSTALLED_APPS = [
+    "core",
     "users",
     "projects",
     "django.contrib.admin",
@@ -79,14 +82,6 @@ DATABASES = {
         "PORT": config("POSTGRES_PORT", default=5432, cast=int),
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

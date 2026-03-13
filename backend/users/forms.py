@@ -69,9 +69,6 @@ class CustomRegistrationForm(UserCreationForm):
         return email
 
     def save(self, commit=True):
-        """
-        Переопределяем метод save, чтобы корректно использовать наш менеджер.
-        """
         cleaned_data = self.cleaned_data
 
         user = CustomUser.objects.create_user(

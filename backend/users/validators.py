@@ -1,8 +1,12 @@
 import re
-import requests
 from urllib.parse import urlparse
+
+import requests
+from django.conf.settings import ALLOWED_GITHUB_DOMAINS
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
+from core.constants import PHONE_NUMBER_MAX_LENGTH
 
 
 def validate_no_digits(value):
@@ -34,7 +38,7 @@ def validate_phone_number(value):
             code='invalid_format'
         )
 
-    if len(cleaned) != 12:
+    if len(cleaned) != PHONE_NUMBER_MAX_LENGTH:
         raise ValidationError(
             _('Некорректная длина номера'),
             code='invalid_length'
@@ -57,20 +61,11 @@ def validate_github_url(value):
     try:
         parsed_url = urlparse(value)
 
-        # Проверяем домен
-        if parsed_url.netloc not in ['github.com', 'www.github.com']:
+        if parsed_url.netloc not in ALLOWED_GITHUB_DOMAINS:
             raise ValidationError(
                 _('Ссылка должна вести на github.com'),
                 code='invalid_domain'
             )
-
-        # Опционально: проверяем доступность ссылки
-        # response = requests.head(value, timeout=5, allow_redirects=True)
-        # if response.status_code not in [200, 301, 302]:
-        #     raise ValidationError(
-        #         _('Ссылка недоступна или ведёт на несуществующую страницу'),
-        #         code='unreachable_url'
-        #     )
 
     except requests.exceptions.RequestException:
         raise ValidationError(

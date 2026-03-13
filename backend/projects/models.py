@@ -76,6 +76,7 @@ class Skill(models.Model):
     class Meta:
         verbose_name = 'Навык'
         verbose_name_plural = 'Навыки'
+        ordering = ['name']
 
     def __str__(self):
         return self.name

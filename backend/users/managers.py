@@ -1,6 +1,8 @@
-from django.contrib.auth.models import BaseUserManager
-from .avatar_utils import generate_avatar_image, save_avatar_image
 import logging
+
+from django.contrib.auth.models import BaseUserManager
+
+from .avatar_utils import generate_avatar_image, save_avatar_image
 
 logger = logging.getLogger(__name__)
 

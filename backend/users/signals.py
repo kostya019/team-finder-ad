@@ -1,8 +1,10 @@
+import logging
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from .models import CustomUser
 from .avatar_utils import generate_avatar_image, save_avatar_image
-import logging
 
 logger = logging.getLogger(__name__)
 

@@ -1,0 +1,21 @@
+# users/validators.py
+PHONE_NUMBER_MAX_LENGTH = 12
+
+# users/avatars_utils.py
+AVATAR_FONT_SIZE = 80
+AVATAR_BACKGROUND_COLORS = (
+    (255, 182, 193), (173, 216, 230), (144, 238, 144),
+    (250, 250, 210), (221, 160, 221), (240, 230, 140),
+    (230, 230, 250), (254, 214, 188), (239, 169, 74),
+    (255, 117, 20), (93, 155, 155), (127, 181, 181),
+    (222, 247, 254), (255, 254, 224), (250, 248, 246),
+    (29, 236, 248), (255, 209, 220), (161, 133, 148)
+)
+AVATAR_TEXT_COLOR = (50, 50, 50)
+AVATAR_RANDOM_RANGE = (1000, 9999)
+
+# projects/views.py
+PARTICIPANT_ACTION_ADD = 'add'
+PARTICIPANT_ACTION_REMOVE = 'remove'
+
+SKILLS_AUTOCOMPLETE_LIMIT = 10

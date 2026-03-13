@@ -1,16 +1,22 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-from django.shortcuts import redirect
-from django.db.models import Q
-from django.urls import reverse_lazy
-from django.core.paginator import Paginator
-from django.http import JsonResponse, Http404
+from http import HTTPStatus
 import json
-from django.contrib import messages
 
-from .models import Project, Skill
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import JsonResponse, Http404
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
+
+from core.constants import (
+    PARTICIPANT_ACTION_ADD,
+    PARTICIPANT_ACTION_REMOVE,
+    SKILLS_AUTOCOMPLETE_LIMIT,
+)
+from core.utils import paginate_queryset
 from .forms import ProjectForm
+from .models import Project, Skill
 
 
 def project_list(request):
@@ -25,9 +31,7 @@ def project_list(request):
     else:
         projects = Project.objects.all().filter(status='open')
 
-    paginator = Paginator(projects, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginate_queryset(projects, request, per_page=12)
 
     context = {
         'projects': page_obj,
@@ -89,8 +93,7 @@ def project_complete(request, project_id):
         project.status = 'closed'
         project.save()
         return JsonResponse({"status": "ok", "project_status": "closed"})
-    else:
-        return JsonResponse({"error": "Permission denied"}, status=403)
+    return JsonResponse({"error": "Permission denied"}, status=HTTPStatus.FORBIDDEN)
 
 
 @login_required
@@ -99,19 +102,22 @@ def participate(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     if project.status == 'closed':
-        return JsonResponse({'error': 'Project is closed'}, status=403)
+        return JsonResponse({'error': 'Project is closed'}, status=HTTPStatus.FORBIDDEN)
 
     if project.owner == request.user:
-        return JsonResponse({'error': 'Cannot remove owner from participants'}, status=403)
+        return JsonResponse(
+            {'error': 'Cannot remove owner from participants'},
+            status=HTTPStatus.FORBIDDEN
+        )
 
     is_participant = project.participants.filter(id=request.user.id).exists()
 
     if not is_participant:
         project.participants.add(request.user)
-        status = "add"
+        status = PARTICIPANT_ACTION_ADD
     else:
         project.participants.remove(request.user)
-        status = "remove"
+        status = PARTICIPANT_ACTION_REMOVE
 
     participants_count = project.participants.count()
 
@@ -130,10 +136,10 @@ def project_detail(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     if project is None:
-        raise Http404('Error')
-    elif project.status == 'closed':
+        raise Http404('Project does not exist')
+    if project.status == 'closed':
         if project.owner != request.user:
-            raise Http404('Error')
+            raise Http404('Project is closed')
 
     context = {
         'project': project,
@@ -148,7 +154,7 @@ def skill_search(request):
     if not q:
         return JsonResponse([], safe=False)
 
-    skills = Skill.objects.filter(name__istartswith=q).order_by('name')[:10]
+    skills = Skill.objects.filter(name__istartswith=q).order_by('name')[:SKILLS_AUTOCOMPLETE_LIMIT]
     results = [{"id": skill.id, "name": skill.name} for skill in skills]
     return JsonResponse(results, safe=False)
 
@@ -158,10 +164,10 @@ def skill_add(request, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     if request.user != project.owner:
-        return JsonResponse({"error": "Permission denied"}, status=403)
+        return JsonResponse({"error": "Permission denied"}, status=HTTPStatus.FORBIDDEN)
 
     if request.method != 'POST':
-        return JsonResponse({"error": "Method not allowed"}, status=405)
+        return JsonResponse({"error": "Method not allowed"}, status=HTTPStatus.METHOD_NOT_ALLOWED)
 
     try:
         data = json.loads(request.body.decode('utf-8'))
@@ -171,7 +177,7 @@ def skill_add(request, project_id):
         if skill_id is None and skill_name is None:
             return JsonResponse(
                 {"error": "Either 'skill_id' or 'name' must be provided"},
-                status=400
+                status=HTTPStatus.BAD_REQUEST
             )
 
         if skill_id:
@@ -189,9 +195,9 @@ def skill_add(request, project_id):
         })
 
     except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON"}, status=400)
+        return JsonResponse({"error": "Invalid JSON"}, status=HTTPStatus.BAD_REQUEST)
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        return JsonResponse({"error": str(e)}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
 @login_required
@@ -200,19 +206,17 @@ def skill_remove(request, project_id, skill_id):
     project = get_object_or_404(Project, id=project_id)
 
     if request.user != project.owner:
-        return JsonResponse({"error": "Permission denied"}, status=403)
+        return JsonResponse({"error": "Permission denied"}, status=HTTPStatus.FORBIDDEN)
 
     if request.method != 'POST':
-        return JsonResponse({"error": "Method not allowed"}, status=405)
+        return JsonResponse({"error": "Method not allowed"}, status=HTTPStatus.METHOD_NOT_ALLOWED)
 
     skill = get_object_or_404(Skill, id=skill_id)
 
-    # Эффективная проверка наличия связи через exists()
     if project.skills.filter(id=skill.id).exists():
         project.skills.remove(skill)
         return JsonResponse({
             "status": "removed_from_project",
             "skill_id": skill_id
         })
-    else:
-        return JsonResponse({"error": "Skill not found in project"}, status=404)
+    return JsonResponse({"error": "Skill not found in project"}, status=HTTPStatus.NOT_FOUND)
